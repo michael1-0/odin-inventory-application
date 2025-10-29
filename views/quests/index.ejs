@@ -1,0 +1,14 @@
+<%- include("../partials/header", {title: "Quests"}) %>
+
+<div style="text-align: center">
+  <% if ( quests ) { %> <% quests.forEach(function(quest) { %>
+  <div>
+    <a href="#"><%= quest.description %></a> by <%=
+    quest.assignee %>
+  </div>
+  <% }) %> <% } else { %>
+  <div>No quests found.</div>
+  <% } %>
+</div>
+
+<%- include("../partials/footer") %>

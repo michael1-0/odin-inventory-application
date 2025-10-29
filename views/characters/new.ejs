@@ -1,0 +1,27 @@
+<%- include("../partials/header", {title: "New Character"}) %>
+
+<h2>New Character</h2>
+
+<form action="/characters" method="post">
+  <fieldset>
+    <legend>Faction</legend>
+
+    <% factions.forEach(faction => { %>
+      <input type="radio" id="<%= "faction-" + faction.faction_id  %>" name="faction" value="<%= "faction-" + faction.faction_id  %>">
+      <label for="<%= "faction-" + faction.faction_id %>"><%= faction.name %></label>
+    <% }); %>  
+  </fieldset>
+
+  <label for="name">Name:</label>
+  <input type="text" name="name" id="name" />
+
+  <label for="height">Height:</label>
+  <input type="number" name="height" id="height" min="0" />
+  
+  <label for="description">Description:</label>
+  <input type="text" name="description" id="description">
+
+  <button type="submit">Submit</button>
+</form>
+
+<%- include("../partials/footer") %>

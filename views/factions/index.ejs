@@ -1,0 +1,41 @@
+<%- include("../partials/header", {title: "Factions"}) %>
+
+<h2>Factions</h2>
+<a href="/factions/new">new</a>
+<table border="1" cellpadding="8" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Goal</th>
+      <th>Hidden Truth</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (factions ) { %> <% factions.forEach(function(faction) { %>
+    <tr>
+      <td><%= faction.name %></td>
+      <td><%= faction.goal %></td>
+      <td><%= faction.hidden_truth %></td>
+      <td>
+        <button>
+          <a href="/factions/<%= faction.faction_id  %>/edit">update</a>
+        </button>
+        <form
+          action="/factions/<%= faction.faction_id  %>/delete"
+          method="post"
+          onsubmit="return confirm('Are you sure you want to delete this?')"
+        >
+          <button type="submit">delete</button>
+        </form>
+      </td>
+    </tr>
+    <% }) %> <% } else { %>
+    <tr>
+      <td colspan="3">No factions found.</td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<%- include("../partials/footer") %>

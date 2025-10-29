@@ -1,0 +1,23 @@
+<%- include("../partials/header", {title: "Edit Faction"}) %>
+
+<h2>Edit Faction</h2>
+
+<form action="/factions/<%= faction.faction_id %>" method="post">
+  <label for="name">Name:</label>
+  <input type="text" name="name" id="name" value="<%= faction.name %>" />
+
+  <label for="goal">Goal:</label>
+  <input type="text" name="goal" id="goal" value="<%= faction.goal %>" />
+
+  <label for="hiddenTruth">Hidden Truth:</label>
+  <input
+    type="text"
+    name="hiddenTruth"
+    id="hiddenTruth"
+    value="<%= faction.hidden_truth %>"
+  />
+
+  <button type="submit">Submit</button>
+</form>
+
+<%- include("../partials/footer") %>

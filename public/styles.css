@@ -1,0 +1,28 @@
+body {
+  font-size: 1.08rem;
+  font-family: monospace;
+  background-color: #c7c2b3;
+  color: #3f3f37;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+main {
+  margin-block: 100px;
+}
+
+header,
+footer {
+  padding-block: 18px;
+  text-align: center;
+}
+
+th,
+td {
+  word-break: break-word; 
+  white-space: normal; 
+}
+

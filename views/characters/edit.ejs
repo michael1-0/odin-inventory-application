@@ -1,0 +1,18 @@
+<%- include("../partials/header", {title: "Edit Character"}) %>
+
+<h2>Edit Character</h2>
+
+<form action="/characters/<%= character.character_id %>" method="post">
+  <label for="name">Name:</label>
+  <input type="text" name="name" id="name" value="<%= character.name %>"/>
+
+  <label for="height">Height:</label>
+  <input type="number" name="height" id="height" min="0" value="<%= character.height %>"/>
+  
+  <label for="description">Description:</label>
+  <input type="text" name="description" id="description" value="<%= character.description %>">
+
+  <button type="submit">Submit</button>
+</form>
+
+<%- include("../partials/footer") %>
