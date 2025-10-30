@@ -62,6 +62,22 @@ async function deleteCharacterDal(id) {
   );
 }
 
+async function getCharactersQuestsCountDal() {
+  const { rows } = await pool.query(
+    `
+    SELECT characters.name, 
+    COUNT(quests.quest_id) AS quest_count, 
+    factions.name AS faction 
+    FROM characters 
+    JOIN characters_quests ON characters_quests.character_id = characters.character_id 
+    JOIN quests ON quests.quest_id = characters_quests.quest_id 
+    JOIN factions ON factions.faction_id = characters.faction_id 
+    GROUP BY characters.name, factions.name
+    `
+  );
+  return rows;
+}
+
 async function getFactionsDal() {
   const { rows } = await pool.query(
     `
@@ -142,6 +158,7 @@ export {
   // characters
   getCharactersDal,
   getCharacterByIdDal,
+  getCharactersQuestsCountDal,
   postCharacterDal,
   putCharacterDal,
   deleteCharacterDal,

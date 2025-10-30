@@ -6,6 +6,7 @@ import express from "express";
 import { charactersRoutes } from "./src/routes/charactersRoutes.js";
 import { questsRoutes } from "./src/routes/questsRoutes.js";
 import { factionsRoutes } from "./src/routes/factionsRoutes.js";
+import { getCharactersQuestsCountController } from "./src/controllers/otherControllers.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -25,8 +26,6 @@ app.use((err, req, res, next) => {
   res.status(err.statusCode || 500).send(err);
 });
 
-app.get("/", (req, res) => {
-  res.render("index");
-});
+app.get("/", getCharactersQuestsCountController);
 
 export { app };

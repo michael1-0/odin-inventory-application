@@ -1,8 +1,9 @@
 <%- include('./partials/header', { title: 'Home' }) %>
-<div style="text-align: center">
-  <div>Character 2B of faction YoRHa has 4 quests to complete</div>
-  <div>Character 9S of faction YoRHa has 4 quests to complete</div>
-  <div>Character Yonah of faction Replicant has 4 quests to complete</div>
-</div>
+
+<% if ( characters ) { %> <% characters.forEach(function(character) { %>
+  <div style="text-align: center">Character <strong><%= character.name %></strong> of faction <strong><%= character.faction %></strong> has <strong><%= character.quest_count  %></strong> quest[s] to complete</div>
+<% }) %> <% } else { %>
+  <div style="text-align: center;">All characters on standby.</div>
+<% } %>
 
 <%- include('./partials/footer') %>
