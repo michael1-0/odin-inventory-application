@@ -20,9 +20,8 @@ CREATE TABLE characters (
 );
 CREATE TABLE quests (
   quest_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  character_id INTEGER UNIQUE NOT NULL,
-  description VARCHAR(255),
-  CONSTRAINT fk_character_unique FOREIGN KEY (character_id) REFERENCES characters(character_id)
+  title VARCHAR(255),
+  description VARCHAR(255)
 );
 CREATE TABLE characters_quests(
   character_quest_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -47,14 +46,12 @@ VALUES
 (2, 'Nier', 168, 'Believes he''s human, fights Shades, unaware of the Replicant/Gestalt system.'),
 (2, 'Yonah', 151, 'Nier''s sister'),
 (4, 'The Shadowlord', 185, 'The true human soul of Nier, trying to reunite with his Replicant Yonah.'),
-(3, '???', NULL, '???'),
-(5, 'Yoko Taro', NULL, 'A Japanese video game director.'),
-(5, 'Yasuhiro Fukushima', NULL, 'Somebody.');
+(3, '???', NULL, '???');
 
-INSERT INTO quests (character_id, description) 
+INSERT INTO quests (title, description) 
 VALUES
-(7, 'Unleash the sealed power to reclaim lost humanity'),
-(8, 'Eliminate rogue machine lifeforms in the abandoned factory');
+('[E]nd', 'Unleash the sealed power to reclaim lost humanity'),
+('Vague Hope', 'Eliminate rogue machine lifeforms in the abandoned factory');
 
 INSERT INTO characters_quests (character_id, quest_id)
 VALUES
