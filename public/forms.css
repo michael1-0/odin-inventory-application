@@ -1,0 +1,11 @@
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 400px;
+}
+
+form .cool-class {
+  max-width: 100px;
+  align-self: center;
+}

@@ -7,8 +7,10 @@
     <legend>Faction</legend>
 
     <% factions.forEach(faction => { %>
-      <input type="radio" id="<%= "faction-" + faction.faction_id  %>" name="faction" value="<%= "faction-" + faction.faction_id  %>">
-      <label for="<%= "faction-" + faction.faction_id %>"><%= faction.name %></label>
+      <div>
+        <input type="radio" id="<%= "faction-" + faction.faction_id  %>" name="faction" value="<%= "faction-" + faction.faction_id  %>">
+        <label for="<%= "faction-" + faction.faction_id %>"><%= faction.name %></label>
+      </div>
     <% }); %>  
   </fieldset>
 
@@ -21,7 +23,7 @@
   <label for="description">Description:</label>
   <input type="text" name="description" id="description">
 
-  <button type="submit">Submit</button>
+  <button type="submit" class="cool-class">Submit</button>
 </form>
 
 <%- include("../partials/footer") %>
