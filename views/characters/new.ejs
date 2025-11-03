@@ -3,6 +3,7 @@
 <h2>New Character</h2>
 
 <form action="/characters" method="post">
+  <%# TODO: if (factions.length > 0 ) { %>
   <fieldset>
     <legend>Faction</legend>
 
@@ -11,9 +12,10 @@
         <input type="radio" id="<%= "faction-" + faction.faction_id  %>" name="faction" value="<%= "faction-" + faction.faction_id  %>">
         <label for="<%= "faction-" + faction.faction_id %>"><%= faction.name %></label>
       </div>
-    <% }); %>  
+    <% }); %>
   </fieldset>
-
+  <%# } %>
+  
   <label for="name">Name:</label>
   <input type="text" name="name" id="name" />
 

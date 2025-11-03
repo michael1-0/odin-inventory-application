@@ -1,8 +1,8 @@
 <%- include('./partials/header', { title: 'Home' }) %>
 
 <div style="display: flex; flex-direction: column; gap: 14px;">
-  <% if ( characters ) { %> <% characters.forEach(function(character) { %>
-      <div style="text-align: center">Character <strong><%= character.name %></strong> of faction <strong><%= character.faction %></strong> has <strong><%= character.quest_count  %></strong> quest[s] to complete</div>
+  <% if ( characters.length > 0 ) { %> <% characters.forEach(function(character) { %>
+    <div style="text-align: center">Character <strong><%= character.name %></strong> of faction <strong><%= character.faction %></strong> has <strong><%= character.quest_count  %></strong> quest[s] to complete</div>
   <% }) %> <% } else { %>
     <div style="text-align: center;">All characters on standby.</div>
   <% } %>

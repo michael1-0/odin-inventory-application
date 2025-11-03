@@ -4,14 +4,16 @@
 <a href="/characters/new">new</a>
 
 <table cellpadding="8" cellspacing="0">
-  <thead>
+  <% if ( characters.length > 0 ) { %> 
+    <thead>
     <tr>
       <th>Name</th>
       <th>Height (cm)</th>
       <th>Description</th>
       <th>Actions</th>
     </tr>
-  </thead>
+    </thead>
+  <% } %>
   <tbody>
     <% characters.forEach(character => { %>
     <tr>

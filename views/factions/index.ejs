@@ -2,7 +2,8 @@
 
 <h2>Factions</h2>
 <a href="/factions/new">new</a>
-<table  cellpadding="8" cellspacing="0">
+<table cellpadding="8" cellspacing="0">
+  <% if (factions.length > 0 ) { %>
   <thead>
     <tr>
       <th>Name</th>
@@ -11,8 +12,9 @@
       <th>Actions</th>
     </tr>
   </thead>
+  <% } %>
   <tbody>
-    <% if (factions ) { %> <% factions.forEach(function(faction) { %>
+    <% if (factions.length > 0 ) { %> <% factions.forEach(function(faction) { %>
     <tr>
       <td><%= faction.name %></td>
       <td><%= faction.goal %></td>
@@ -30,11 +32,7 @@
         </form>
       </td>
     </tr>
-    <% }) %> <% } else { %>
-    <tr>
-      <td colspan="3">No factions found.</td>
-    </tr>
-    <% } %>
+    <% }) %> <% } %>
   </tbody>
 </table>
 
