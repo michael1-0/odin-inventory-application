@@ -1,8 +1,18 @@
 import { Router } from "express";
-import { getQuests } from "../controllers/questsController.js";
+import {
+  getQuestByIdController,
+  getQuestFormWithCharacters,
+  getQuestsController,
+  deleteQuestController,
+  postQuestController,
+} from "../controllers/questsController.js";
 
 const questsRoutes = Router();
 
-questsRoutes.get("/", getQuests);
+questsRoutes.get("/", getQuestsController);
+questsRoutes.get("/new", getQuestFormWithCharacters);
+questsRoutes.get("/:id", getQuestByIdController);
+questsRoutes.post("/:id/delete", deleteQuestController);
+questsRoutes.post("/", postQuestController);
 
 export { questsRoutes };

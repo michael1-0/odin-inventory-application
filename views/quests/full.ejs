@@ -1,0 +1,19 @@
+<%- include("../partials/header", {title: "New Quest"}) %>
+
+<% if (questData && questData.length > 0) { %>
+  <h1><%= questData[0].title %></h1>
+  <p><%= questData[0].description %></p>
+
+  <h3>Characters in this quest:</h3>
+  <ul>
+    <% questData.forEach(function(row) { %>
+      <li><%= row.name %></li>
+    <% }); %>
+  </ul>
+<% } else { %>
+  <p>No quest found.</p>
+<% } %>
+<a href="/quests/">go back</a>
+
+
+<%- include("../partials/footer") %>

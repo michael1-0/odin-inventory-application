@@ -144,14 +144,71 @@ async function getQuestsDal() {
   const { rows } = await pool.query(
     `
     SELECT
-    characters.name AS assignee,
-    quests.description
+    quests.title,
+    quests.description,
+    quests.quest_id
     FROM quests
-    JOIN characters
-    ON quests.character_id = characters.character_id
     `
   );
   return rows;
+}
+
+async function getQuestByIdDal(questId) {
+  const { rows } = await pool.query(
+    `
+    SELECT
+    characters.name,
+    quests.description,
+    quests.title
+    FROM quests
+    JOIN characters_quests ON characters_quests.quest_id = quests.quest_id
+    JOIN characters ON characters_quests.character_id = characters.character_id 
+    WHERE quests.quest_id = $1
+    `,
+    [questId]
+  );
+  return rows;
+}
+
+async function deleteQuestDal(id) {
+  await pool.query(
+    `
+    DELETE FROM quests
+    WHERE quest_id = $1
+    `,
+    [id]
+  );
+}
+
+async function postQuestDal({ title, description, characterIndices }) {
+  const { rows } = await pool.query(
+    `
+    INSERT INTO quests (title, description)
+    VALUES ($1, $2)
+    RETURNING quest_id
+    `,
+    [title, description]
+  );
+  const id = rows[0]["quest_id"];
+  if (Array.isArray(characterIndices)) {
+    characterIndices.map(async (index) => {
+      await pool.query(
+        `
+      INSERT INTO characters_quests (character_id, quest_id)
+      VALUES ($1, $2)
+      `,
+        [index, id]
+      );
+    });
+  } else {
+    await pool.query(
+      `
+      INSERT INTO characters_quests (character_id, quest_id)
+      VALUES ($1, $2)
+      `,
+      [characterIndices, id]
+    );
+  }
 }
 
 export {
@@ -170,4 +227,7 @@ export {
   deleteFactionDal,
   // quests
   getQuestsDal,
+  getQuestByIdDal,
+  deleteQuestDal,
+  postQuestDal,
 };
