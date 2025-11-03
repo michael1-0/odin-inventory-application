@@ -1,9 +1,12 @@
 <%- include('./partials/header', { title: 'Home' }) %>
 
-<% if ( characters ) { %> <% characters.forEach(function(character) { %>
-  <div style="text-align: center">Character <strong><%= character.name %></strong> of faction <strong><%= character.faction %></strong> has <strong><%= character.quest_count  %></strong> quest[s] to complete</div>
-<% }) %> <% } else { %>
-  <div style="text-align: center;">All characters on standby.</div>
-<% } %>
+<div style="display: flex; flex-direction: column; gap: 14px;">
+  <% if ( characters ) { %> <% characters.forEach(function(character) { %>
+      <div style="text-align: center">Character <strong><%= character.name %></strong> of faction <strong><%= character.faction %></strong> has <strong><%= character.quest_count  %></strong> quest[s] to complete</div>
+  <% }) %> <% } else { %>
+    <div style="text-align: center;">All characters on standby.</div>
+  <% } %>
+</div>
+
 
 <%- include('./partials/footer') %>
