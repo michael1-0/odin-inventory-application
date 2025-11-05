@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
   getFactionsController,
-  postFactionController,
+  postFactionPipeline,
   putFactionController,
   deleteFactionController,
   getFactionFormController,
@@ -11,7 +11,7 @@ import {
 const factionsRoutes = Router();
 
 factionsRoutes.get("/", getFactionsController);
-factionsRoutes.post("/", postFactionController);
+factionsRoutes.post("/", postFactionPipeline);
 factionsRoutes.post("/:id", putFactionController);
 factionsRoutes.post("/:id/delete", deleteFactionController);
 

@@ -1,7 +1,9 @@
 <%- include("../partials/header", {title: "New Faction"}) %>
 
 <h2>New Faction</h2>
-
+<% if ( errors ) { %>
+    <%- include("../partials/errors.ejs") %>
+<% } %>
 <form action="/factions" method="post">
   <label for="name">Name:</label>
   <input type="text" name="name" id="name" />
