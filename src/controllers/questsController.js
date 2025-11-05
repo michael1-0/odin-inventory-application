@@ -6,6 +6,7 @@ import {
   postQuestDal,
 } from "../db/queries.js";
 import { body, validationResult, matchedData } from "express-validator";
+import { NotFound } from "../errors/NotFound.js";
 
 const errorMessages = {
   alpha: "must only contain letters",
@@ -26,7 +27,8 @@ const validateQuest = [
         ? value.map((index) => Number(index))
         : Number(value);
     })
-    .not().equals("0")
+    .not()
+    .equals("0")
     .withMessage(`Characters to assign ${errorMessages.characterIndicesEmpty}`),
 ];
 
@@ -43,6 +45,9 @@ async function getQuestFormWithCharacters(req, res) {
 async function getQuestByIdController(req, res) {
   const id = req.params.id;
   const questData = await getQuestByIdDal(Number(id));
+  if (questData.length === 0) {
+    throw new NotFound("Quest not found");
+  }
   res.render("quests/full", { questData: questData });
 }
 
