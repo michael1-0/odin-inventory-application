@@ -46,6 +46,7 @@ async function getQuestByIdController(req, res) {
   const id = req.params.id;
   const questData = await getQuestByIdDal(Number(id));
   if (questData.length === 0) {
+    await deleteQuestDal(Number(id));
     throw new NotFound("Quest not found");
   }
   res.render("quests/full", { questData: questData });
