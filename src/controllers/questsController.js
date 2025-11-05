@@ -5,6 +5,30 @@ import {
   deleteQuestDal,
   postQuestDal,
 } from "../db/queries.js";
+import { body, validationResult, matchedData } from "express-validator";
+
+const errorMessages = {
+  alpha: "must only contain letters",
+  descriptionLength: "must be within 1-100 characters long",
+  characterIndicesEmpty: "must not be empty",
+};
+const validateQuest = [
+  body("title").trim(),
+  body("description")
+    .trim()
+    .isLength({ min: 1, max: 100 })
+    .withMessage(`Description ${errorMessages.descriptionLength}`),
+  ,
+  body("characterIndices")
+    .trim()
+    .customSanitizer((value) => {
+      return Array.isArray(value)
+        ? value.map((index) => Number(index))
+        : Number(value);
+    })
+    .not().equals("0")
+    .withMessage(`Characters to assign ${errorMessages.characterIndicesEmpty}`),
+];
 
 async function getQuestsController(req, res) {
   const quests = await getQuestsDal();
@@ -13,7 +37,7 @@ async function getQuestsController(req, res) {
 
 async function getQuestFormWithCharacters(req, res) {
   const characters = await getCharactersDal();
-  res.render("quests/new", { characters: characters });
+  res.render("quests/new", { characters: characters, errors: null });
 }
 
 async function getQuestByIdController(req, res) {
@@ -29,21 +53,29 @@ async function deleteQuestController(req, res) {
 }
 
 async function postQuestController(req, res) {
-  const body = req.body;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const characters = await getCharactersDal();
+    return res.render("quests/new", {
+      characters: characters,
+      errors: errors.array(),
+    });
+  }
+  const body = matchedData(req);
   await postQuestDal({
     title: body.title,
     description: body.description,
-    characterIndices: Array.isArray(body.characterIndices)
-      ? body.characterIndices.map((index) => Number(index))
-      : Number(body.characterIndices),
+    characterIndices: body.characterIndices,
   });
   res.status(300).redirect("/quests");
 }
+
+const postQuestPipeline = [validateQuest, postQuestController];
 
 export {
   getQuestsController,
   getQuestFormWithCharacters,
   getQuestByIdController,
   deleteQuestController,
-  postQuestController,
+  postQuestPipeline,
 };

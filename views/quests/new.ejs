@@ -1,7 +1,9 @@
 <%- include("../partials/header", {title: "New Quest"}) %>
 
 <h2>New Quest</h2>
-
+<% if ( errors ) { %>
+    <%- include("../partials/errors.ejs") %>
+<% } %>
 <form action="/quests" method="post">
   <label for="title">Title:</label>
   <input type="text" name="title" id="title" />
