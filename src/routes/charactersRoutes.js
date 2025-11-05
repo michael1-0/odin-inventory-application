@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
   getCharactersController,
-  postCharacterController,
+  postCharacterPipeline,
   putCharacterController,
   deleteCharacterController,
   getCharacterFormController,
@@ -11,7 +11,7 @@ import {
 const charactersRoutes = Router();
 
 charactersRoutes.get("/", getCharactersController);
-charactersRoutes.post("/", postCharacterController);
+charactersRoutes.post("/", postCharacterPipeline);
 charactersRoutes.post("/:id", putCharacterController);
 charactersRoutes.post("/:id/delete", deleteCharacterController)
 

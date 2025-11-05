@@ -1,3 +1,4 @@
+import { body, matchedData, validationResult } from "express-validator";
 import {
   getCharactersDal,
   getCharacterByIdDal,
@@ -7,17 +8,42 @@ import {
   getFactionsDal,
 } from "../db/queries.js";
 
+const errorMessages = {
+  alpha: "must only contain letters",
+  descriptionLength: "must be within 1-100 characters long",
+  integer: "must be a valid integer",
+};
+const validateCharacter = [
+  body("faction")
+    .trim()
+    .customSanitizer((value) => value.split("-")[1])
+    .toInt(),
+  body("name").trim().isAlpha().withMessage(`Name ${errorMessages.alpha}`),
+  body("height").toInt().isInt().withMessage(`Height ${errorMessages.integer}`),
+  body("description")
+    .isLength({ min: 1, max: 100 })
+    .withMessage(`Description ${errorMessages.descriptionLength}`),
+];
+
 async function getCharactersController(req, res) {
   const characters = await getCharactersDal();
   return res.render("characters/index", { characters: characters });
 }
 
 async function postCharacterController(req, res) {
-  const body = req.body;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const factions = await getFactionsDal();
+    return res.render("characters/new", {
+      factions: factions,
+      errors: errors.array() || null,
+    });
+  }
+  const body = matchedData(req);
   await postCharacterDal({
-    factionId: body.faction.split("-")[1],
+    factionId: body.faction,
     name: body.name,
-    height: Number(body.height),
+    height: body.height,
     description: body.description,
   });
   return res.status(300).redirect("/characters");
@@ -43,7 +69,7 @@ async function deleteCharacterController(req, res) {
 
 async function getCharacterFormController(req, res) {
   const factions = await getFactionsDal();
-  return res.render("characters/new", { factions: factions });
+  return res.render("characters/new", { factions: factions, errors: null });
 }
 
 async function getCharacterEditFormController(req, res) {
@@ -53,9 +79,11 @@ async function getCharacterEditFormController(req, res) {
   res.render("characters/edit", { character: character });
 }
 
+const postCharacterPipeline = [validateCharacter, postCharacterController];
+
 export {
   getCharactersController,
-  postCharacterController,
+  postCharacterPipeline,
   putCharacterController,
   deleteCharacterController,
   getCharacterFormController,

@@ -2,6 +2,11 @@
 
 <h2>New Character</h2>
 
+<% if ( errors ) { %>
+    <%- include("../partials/errors.ejs") %>
+<% } %>
+
+
 <form action="/characters" method="post">
   <%# TODO: if (factions.length > 0 ) { %>
   <fieldset>
