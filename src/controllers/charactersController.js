@@ -17,7 +17,8 @@ const validateCharacter = [
   body("faction")
     .trim()
     .customSanitizer((value) => value.split("-")[1])
-    .toInt(),
+    .toInt()
+    .not(),
   body("name").trim().isAlpha().withMessage(`Name ${errorMessages.alpha}`),
   body("height").toInt().isInt().withMessage(`Height ${errorMessages.integer}`),
   body("description")
@@ -69,6 +70,9 @@ async function deleteCharacterController(req, res) {
 
 async function getCharacterFormController(req, res) {
   const factions = await getFactionsDal();
+  if (factions.length === 0) {
+    return res.redirect("/factions/new");
+  }
   return res.render("characters/new", { factions: factions, errors: null });
 }
 
